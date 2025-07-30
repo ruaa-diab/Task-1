@@ -8,6 +8,7 @@ public class EventManager {
 
     private Map<Event, Time> HistoryEvents=new HashMap<>();
     // a map to store events with time that it happend in (fired a notification)
+   //check hereeeeeeeeeeeeeee
     private Map<Event, Time> Upcoming=new HashMap<>();
     // a map to store events with time so when the time comes it will fire and notifications can start
 

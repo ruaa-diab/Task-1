@@ -10,42 +10,39 @@ public class NewTaskEvent extends Event  implements Subject<Subscriber> {
     // private Admin admin;
 
 
+    public NewTaskEvent(EventType type, Task task) {
+        super(type);
+        this.task = task;
+    }
+
     public NewTaskEvent(EventType type) {
         super(type);
     }
 
-    public NewTaskEvent(EventType type, Task task) {
-        super(type);
-        this.getTask(task);
-
-    }
-
-    public Task getTask(Task task) {
-        return this.task;
+    public Task getTask() {
+        return task;
     }
 
     public void setTask(Task task) {
         this.task = task;
     }
 
-
-    @Override
-    public String toString() {
-        return "NewTaskEvent{" +
-                "task=" + task.getTaskId() +
-                '}';
-    }
-
-
-    public void publish(NewTaskEvent task) {
+    public void publish() {
         //WE ALSO HAVE TO RECORD THEM
 
         ManagingSubscribers ms=ManagingSubscribers.getInstance();
 
         List<Subscriber> interestedPeople = ManagingSubscribers.getInstance().getSubscribers(this.getType());
+        Notification notification = new Notification(
+                "New Task Created",this,
+                "Task: " + this.getTask().getTaskId()+ " has been created"
+        );
+        // Pass the actual task object
+        //since Notification takes Event and newTaskEVENT EXTENDS FROM EVENT
+        //NOW WE CAn pass any type of event
 
         for (Subscriber person : interestedPeople) {
-            person.update(); // Deliver the message
+            person.update(notification );  // Deliver the message
         }
 
 

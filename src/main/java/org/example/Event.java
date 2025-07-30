@@ -3,6 +3,9 @@ package org.example;
 
 
 public  class Event{
+
+
+
     private EventType type;
 
     public Event(EventType type) {

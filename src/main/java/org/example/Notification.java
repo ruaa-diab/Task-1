@@ -5,50 +5,40 @@ import java.time.LocalDateTime;
 
 public class Notification {
 
-    private String eventType;
-    private String msg;
-    private LocalDateTime timeStamp;
+    private String title;
+    private String message;
+    private Event relatedTask;
 
     public Notification() {
     }
 
-
-    public Notification(String eventType,String msg,LocalDateTime timeStamp) {
-        this.setEventType(eventType);
-        this.setMsg(msg);
-        this.setTimeStamp(timeStamp);
+    public Notification(String message, Event relatedTask, String title) {
+        this.message = message;
+        this.relatedTask = relatedTask;
+        this.title = title;
     }
 
-    @Override
-    public String toString() {
-        return "Notification{" +
-                "eventType='" + eventType + '\'' +
-                ", msg='" + msg + '\'' +
-                ", timeStamp=" + timeStamp +
-                '}';
+    public String getMessage() {
+        return message;
     }
 
-    public String getEventType() {
-        return eventType;
+    public void setMessage(String message) {
+        this.message = message;
     }
 
-    public void setEventType(String eventType) {
-        this.eventType = eventType;
+    public Event getRelatedTask() {
+        return relatedTask;
     }
 
-    public String getMsg() {
-        return msg;
+    public void setRelatedTask(Event relatedTask) {
+        this.relatedTask = relatedTask;
     }
 
-    public void setMsg(String msg) {
-        this.msg = msg;
+    public String getTitle() {
+        return title;
     }
 
-    public LocalDateTime getTimeStamp() {
-        return timeStamp;
-    }
-
-    public void setTimeStamp(LocalDateTime timeStamp) {
-        this.timeStamp = timeStamp;
+    public void setTitle(String title) {
+        this.title = title;
     }
 }
