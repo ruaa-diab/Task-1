@@ -48,20 +48,9 @@ public class NewTaskEvent extends Event {
             person.notify();  // Deliver the message
         }
 
-/*public void createTask(String title) {
-    // 1. Create the task (no event type involved)
-    Task newTask = new Task(title);
-    database.save(newTask);
 
-    // 2. Create event ABOUT what happened to that task
-    TaskCreatedEvent event = new TaskCreatedEvent(newTask.getId());
 
-    // 3. Publish using the appropriate event type
-    eventBus.publish(TASK_CREATED, event);  // EventType here, not in Task
-}
 
-}
- */
     }
 
 
