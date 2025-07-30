@@ -5,16 +5,16 @@ public class NewTaskEvent extends Event{
     private Task task;
    // private Admin admin;
 
-    public NewTaskEvent(EventType type,Task task) {
+
+    public NewTaskEvent(EventType type) {
         super(type);
+    }
+
+    public NewTaskEvent(EventType type, Task task) {
+       super(type);
         this.getTask(task);
 
     }
-
-
-
-
-
 
     public Task getTask(Task task) {
         return this.task;
@@ -25,6 +25,14 @@ public class NewTaskEvent extends Event{
     }
 
 
+    @Override
+    public String toString() {
+        return "NewTaskEvent{" +
+                "task=" + task.getTaskId() +
+                '}';
+    }
 
+
+    
 
 }

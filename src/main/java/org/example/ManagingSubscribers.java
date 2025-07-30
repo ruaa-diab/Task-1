@@ -4,15 +4,16 @@ import java.util.HashMap;
 import java.util.Map;
 
 public static class ManagingSubscribers {
+    public ManagingSubscribers() {
+    }
 
-    public Map<Subscriber, EventType> getManage() {
+    private static Map<Subscriber,EventType> manage=new HashMap<>();
+
+    public static Map<Subscriber, EventType> getManage() {
         return manage;
     }
 
-    public void setManage(Map<Subscriber, EventType> manage) {
-        this.manage = manage;
+    public static void setManage(Map<Subscriber, EventType> manage) {
+        ManagingSubscribers.manage = manage;
     }
-
-    private Map<Subscriber,EventType> manage=new HashMap<>();
-
 }
