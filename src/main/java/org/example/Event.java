@@ -2,55 +2,69 @@ package org.example;
 
 import java.sql.Time;
 import java.util.ArrayList;
+import java.util.Optional;
 
-public class Event implements Subject<Subscriber> { //this way i get to put Subscribr instead of observer and still
+public  class Event{ //implements Subject<Subscriber> { //this way i get to put Subscribr instead of observer and still
             //keep the observer design
     private EventType type;
-    private Time time;
-    private boolean isUrgent;
-    private ArrayList<Task> tasks;
 
-    private ArrayList<Subscriber> notified;//as in notified people about this certain event
-    public Event(EventType type,Time time,boolean isUrgent,ArrayList<Task>tasks,ArrayList<Subscriber>notified){
-        this.setType(type);
-        this.setTime(time);
-        this.setUrgent(isUrgent);
-        this.setTasks(tasks);
-        this.setNotified(notified);
+    public Event(EventType type) {
+        this.type = type;
     }
 
+    /* private Time time;
+        private boolean isUrgent;
+        private ArrayList<Task> tasks;  //WE MIGHT NEED TO MAKE
+        // TIS OPTIONAL IN CASE THERE ARE NO TASKS
+        Optional<ArrayList<Task>> checkNull = Optional.ofNullable(tasks);
 
-    public boolean isUrgent() {
-        return isUrgent;
+          /*    if (checkNull.isPresent()) {
+
+        }
+            else
+                    System.out.println("word is null");
     }
-
-    public void setUrgent(boolean urgent) {
-        isUrgent = urgent;
-    }
-
-    public Event(){
-
-    }
-    public ArrayList<Task> getTasks() {
-        return tasks;
-    }
-
-    public void setTasks(ArrayList<Task> tasks) {
-        if(tasks.isEmpty()){
-            throw new NullPointerException();
-        }else{
-        this.tasks = tasks;
-    }}
+        private ArrayList<Subscriber> notified;//as in notified people about this certain event
+        public Event(EventType type,Time time,boolean isUrgent,ArrayList<Task>tasks,ArrayList<Subscriber>notified){
+            this.setType(type);
+            this.setTime(time);
+            this.setUrgent(isUrgent);
+            this.setTasks(tasks);
+            this.setNotified(notified);
+        }
 
 
-    public Time getTime() {
-        return time;
-    }
+        public boolean isUrgent() {
+            return isUrgent;
+        }
 
-    public void setTime(Time time) {
-        this.time = time;
-    }
+        public void setUrgent(boolean urgent) {
+            isUrgent = urgent;
+        }
 
+        public Event(){
+
+        }
+        public ArrayList<Task> getTasks() {
+            return tasks;
+        }
+
+        public void setTasks(ArrayList<Task> tasks) {
+            if(tasks.isEmpty()){
+                throw new NullPointerException();
+            }else{
+            this.tasks = tasks;
+        }}
+
+
+        public Time getTime() {
+            return time;
+        }
+
+        public void setTime(Time time) {
+            this.time = time;
+        }
+    */
     public EventType getType() {
         return type;
     }
@@ -58,7 +72,7 @@ public class Event implements Subject<Subscriber> { //this way i get to put Subs
     public void setType(EventType type) {
         this.type = type;
     }
-
+/*
     public ArrayList<Subscriber> getNotified() {
         return notified;
     }

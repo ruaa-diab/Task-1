@@ -1,18 +1,19 @@
 package org.example;
 
 import java.sql.Time;
+import java.time.LocalDateTime;
 
 public class Notification {
 
     private String eventType;
     private String msg;
-    private long timeStamp;
+    private LocalDateTime timeStamp;
 
     public Notification() {
     }
 
 
-    public Notification(String eventType,String msg,long timeStamp) {
+    public Notification(String eventType,String msg,LocalDateTime timeStamp) {
         this.setEventType(eventType);
         this.setMsg(msg);
         this.setTimeStamp(timeStamp);
@@ -43,11 +44,11 @@ public class Notification {
         this.msg = msg;
     }
 
-    public long getTimeStamp() {
+    public LocalDateTime getTimeStamp() {
         return timeStamp;
     }
 
-    public void setTimeStamp(long timeStamp) {
+    public void setTimeStamp(LocalDateTime timeStamp) {
         this.timeStamp = timeStamp;
     }
 }
