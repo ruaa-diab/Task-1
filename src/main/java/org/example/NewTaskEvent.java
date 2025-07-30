@@ -1,9 +1,13 @@
 package org.example;
 
-public class NewTaskEvent extends Event{
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+public class NewTaskEvent extends Event {
 
     private Task task;
-   // private Admin admin;
+    // private Admin admin;
 
 
     public NewTaskEvent(EventType type) {
@@ -11,7 +15,7 @@ public class NewTaskEvent extends Event{
     }
 
     public NewTaskEvent(EventType type, Task task) {
-       super(type);
+        super(type);
         this.getTask(task);
 
     }
@@ -33,6 +37,34 @@ public class NewTaskEvent extends Event{
     }
 
 
-    
+    public void publish(NewTaskEvent task) {
+        //WE ALSO HAVE TO RECORD THEM
+
+        ManagingSubscribers ms=ManagingSubscribers.getInstance();
+
+        List<Subscriber> interestedPeople = ManagingSubscribers.getInstance().getSubscribers(this.getType());
+
+        for (Subscriber person : interestedPeople) {
+            person.notify();  // Deliver the message
+        }
+
+/*public void createTask(String title) {
+    // 1. Create the task (no event type involved)
+    Task newTask = new Task(title);
+    database.save(newTask);
+
+    // 2. Create event ABOUT what happened to that task
+    TaskCreatedEvent event = new TaskCreatedEvent(newTask.getId());
+
+    // 3. Publish using the appropriate event type
+    eventBus.publish(TASK_CREATED, event);  // EventType here, not in Task
+}
+
+}
+ */
+    }
+
+
+
 
 }

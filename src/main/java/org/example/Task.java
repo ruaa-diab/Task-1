@@ -5,7 +5,6 @@ import java.time.LocalDateTime;
 public class Task {
     private String taskId;
     private String title;
-    private LocalDateTime time;
     private Admin admin;
     private boolean isCompleted;
 
@@ -34,15 +33,6 @@ public class Task {
         this.title = title;
     }
 
-    public LocalDateTime getTime() {
-        return time;
-    }
-
-    public void setTime(LocalDateTime time) {
-        this.time = time;
-    }
-
-
 
     public boolean isCompleted() {
         return isCompleted;
@@ -52,13 +42,15 @@ public class Task {
         isCompleted = completed;
     }
 
-    public Task(Admin admin, boolean isCompleted, String taskId, LocalDateTime time, String title) {
+    public Task(Admin admin, boolean isCompleted, String taskId,  String title) {
+        //this constructor is for making tasks and publishing tem as soon as the made
         this.admin = admin;
         this.isCompleted = isCompleted;
         this.taskId = taskId;
-        this.time = time;
+
         this.title = title;
     }
+
 
     @Override
     public String toString() {
@@ -66,11 +58,12 @@ public class Task {
                 "admin=" + admin +
                 ", taskId='" + taskId + '\'' +
                 ", title='" + title + '\'' +
-                ", time=" + time +
+
                 ", isCompleted=" + isCompleted +
                 '}';
     }
 
     public Task() {
     }
+
 }
