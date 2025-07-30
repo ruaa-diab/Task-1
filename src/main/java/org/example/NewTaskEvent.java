@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class NewTaskEvent extends Event {
+public class NewTaskEvent extends Event  implements Subject<Subscriber> {
 
     private Task task;
     // private Admin admin;
@@ -45,7 +45,7 @@ public class NewTaskEvent extends Event {
         List<Subscriber> interestedPeople = ManagingSubscribers.getInstance().getSubscribers(this.getType());
 
         for (Subscriber person : interestedPeople) {
-            person.notify();  // Deliver the message
+            person.update(); // Deliver the message
         }
 
 
@@ -54,6 +54,24 @@ public class NewTaskEvent extends Event {
     }
 
 
+    @Override
+    //HEREEEEEEEEEEEEEEEEEEE CHECKK CHECK CHECK
+    public void ADD(Subscriber o) {
+        ManagingSubscribers.getInstance().getSubscribers(this.getType()).add(o);
 
+    }
 
+    @Override
+    public void Remove(Subscriber o) {
+        ManagingSubscribers.getInstance().getSubscribers(this.getType()).remove(o);
+
+    }
+
+    @Override
+    public void notifyAllSubscribers(Notification nf) {
+        for(Subscriber s:  ManagingSubscribers.getInstance().getSubscribers(this.getType())){
+            s.update(nf);
+        }
+
+    }
 }
