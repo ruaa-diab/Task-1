@@ -5,6 +5,12 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 public class Scheduler {
+
+    private static final int defaultRemainderInterval=10;
+    private static final int defaultHeartBeatInterval=5;
+    //i added those cause those reminders will be set to fire by this default time till changed by admin.
+
+
     private ScheduledExecutorService scheduler;
     private ManagingSubscribers eventManager;
 
@@ -30,10 +36,12 @@ public class Scheduler {
     //in these methods i didn't include the nullpointerexceptionmethod
     //because i considered that the system is connected to data base or souce that gets these reminders from
     //so
-        public void startReminderEvents(int interval,String msg){
+        public void startReminderEvents(int interval,String msg,boolean isUrgent){
+        //set to falult if null
+
             scheduler.scheduleAtFixedRate(()->{
 
-                ReminderEvents re=new ReminderEvents(msg);
+                ReminderEvents re=new ReminderEvents(msg,isUrgent);
                 eventManager.publish(re);
                 System.out.println(" a new reminder was made"+msg +"at "+java.time.LocalTime.now());
 
@@ -49,10 +57,13 @@ public class Scheduler {
 
         }
 
-        public void startEventsLikeHeartBeats(int interval,String msg){
+        public void startEventsLikeHeartBeats(int interval,String msg,boolean isUrgent){
         //to be made to have interval time diffrent than the reminder part
+            //by msg we mean the title or description to this event
+            //if isUrgent is null it is set to fault
+            //and when the system takes the data from anywhere it will make it Boolean ...
             scheduler.scheduleAtFixedRate(()->{
-                HeartbeatEvent heartbeat =new HeartbeatEvent(msg);
+                HeartbeatEvent heartbeat =new HeartbeatEvent(msg,isUrgent);
                 eventManager.publish(heartbeat);
                 System.out.println(" a new hear tbeat was made at"+java.time.LocalTime.now());
 
@@ -65,6 +76,13 @@ public class Scheduler {
             scheduler.shutdown();
         }
 
+
+
+       //1.is it true that the system makes them and fire them(to make sure)
+    //is it true if i make the system fires them at a default time
+    //note:no need for new method fix in publishhhhhhhhhhhhhhhhhhhhh
+    //and the admin can update and change it
+    // i will make sure that they dint have the same time
 
 
 

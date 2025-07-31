@@ -8,9 +8,21 @@ public class NewTaskEvent extends Event {
 
     private Task task;
 
+    @Override
+    public boolean isUrgent() {
+        return isUrgent;
+    }
 
-    public NewTaskEvent(EventType type, Task task) {
-        super(EventType.NEW_TASK,task.getTitle());
+    @Override
+    public void setUrgent(boolean urgent) {
+        isUrgent = urgent;
+    }
+
+    private boolean isUrgent;
+
+
+    public NewTaskEvent(EventType type, Task task,boolean isUrgent) {
+        super(EventType.NEW_TASK,task.getTitle(),isUrgent);
         this.task = task;
     }
 

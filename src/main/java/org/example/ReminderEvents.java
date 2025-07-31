@@ -1,26 +1,18 @@
 package org.example;
 
-public class ReminderEvents extends Event{
+public class ReminderEvents extends Event {
+
 
     private String name;
+    private boolean isUrgent;
+    public ReminderEvents(String name,boolean isUrgent) {
+        super(EventType.TASK_REMINDER, name, isUrgent);
 
-    public ReminderEvents(String name) {
-        super(EventType.TASK_REMINDER,name);
-        this.name=name;
+
     }
-
-
 
     @Override
     public String toString() {
-        return this.getName()+" this is a reminder event for every min";
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
+        return this.getMsg() + "ReminderEvents{}";
     }
 }
