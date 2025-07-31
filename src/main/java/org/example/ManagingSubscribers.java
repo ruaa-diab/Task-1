@@ -49,7 +49,8 @@ public class ManagingSubscribers implements Subject<Subscriber>{
         }
         this.getSubscribers(type).add(o);
     }
-
+//add here to make the subscribers subscribe but not the same thing
+    //subscribe method for users
     @Override
     public void Unsubscribe(Subscriber o, EventType type) {
         if(this.getSubscribers(type)!=null){

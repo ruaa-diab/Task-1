@@ -21,7 +21,7 @@ public class NewTaskEvent extends Event {
     private boolean isUrgent;
 
 
-    public NewTaskEvent(EventType type, Task task,boolean isUrgent) {
+    public NewTaskEvent( Task task,boolean isUrgent) {
         super(EventType.NEW_TASK,task.getTitle(),isUrgent);
         this.task = task;
     }

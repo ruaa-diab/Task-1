@@ -36,7 +36,7 @@ public class Admin {
     public void  creatTask(String title,boolean isUrgent) { //THIS METHOD IS ONLY FOR NEW TASKS
         c = c + 1;
         Task task = new Task("TSK" + c, title);
-        NewTaskEvent NTE = new NewTaskEvent(EventType.NEW_TASK, task,isUrgent); //BECASUE THIS IS A NEW TASK AND IT IS TYPE NEWTASK
+        NewTaskEvent NTE = new NewTaskEvent( task,isUrgent); //BECASUE THIS IS A NEW TASK AND IT IS TYPE NEWTASK
 
        ManagingSubscribers.getInstance().publish(NTE);
 

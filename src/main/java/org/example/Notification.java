@@ -41,4 +41,13 @@ public class Notification {
     public void setTitle(String title) {
         this.title = title;
     }
+
+    @Override
+    public String toString() {
+        return "Notification{" +
+                "message='" + message + '\'' +
+                ", title='" + title + '\'' +
+                ", Task=" + this.getRelatedTask().getMsg() +
+                '}';
+    }
 }
