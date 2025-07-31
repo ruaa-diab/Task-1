@@ -2,8 +2,9 @@ package org.example;
 
 
 
-public  class Event{
+public abstract class Event{
 
+//checkkkkkkkkkk
 
 
     private EventType type;

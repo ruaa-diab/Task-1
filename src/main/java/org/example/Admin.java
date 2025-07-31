@@ -35,10 +35,10 @@ public class Admin {
 
     public void  creatTask(String title) { //THIS METHOD IS ONLY FOR NEW TASKS
         c = c + 1;
-        Task task = new Task(this, false, "TSK" + c, title);
+        Task task = new Task("TSK" + c, title);
         NewTaskEvent NTE = new NewTaskEvent(EventType.NEW_TASK, task); //BECASUE THIS IS A NEW TASK AND IT IS TYPE NEWTASK
 
-        NTE.publish();
+       ManagingSubscribers.getInstance().publish(NTE);
 
         //so the admin get to choose when it has to be done or launched
         //and publish done
