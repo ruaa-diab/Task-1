@@ -7,10 +7,14 @@ public abstract class Event{
 //checkkkkkkkkkk
 
 
+    private String msg;
+
     private EventType type;
 
-    public Event(EventType type) {
+    public Event(EventType type,String msg) {
+
         this.type = type;
+        this.msg=msg;
     }
 
     public EventType getType() {
@@ -21,4 +25,11 @@ public abstract class Event{
         this.type = type;
     }
 
+    public String getMsg() {
+        return msg;
+    }
+
+    public void setMsg(String msg) {
+        this.msg = msg;
+    }
 }

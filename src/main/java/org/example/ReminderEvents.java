@@ -2,24 +2,25 @@ package org.example;
 
 public class ReminderEvents extends Event{
 
+    private String name;
 
-
-    public ReminderEvents(EventType type) {
-        super(type);
+    public ReminderEvents(String name) {
+        super(EventType.TASK_REMINDER,name);
+        this.name=name;
     }
 
 
 
-
-
-    /*public class EventScheduler {
-    private ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
-
-    public void startReminderEvents() {
-        scheduler.scheduleAtFixedRate(() -> {
-            ReminderEvents event = new ReminderEvents();
-            ManagingSubscribers.getInstance().publish(EventType.REMINDER, event);
-        }, 0, 10, TimeUnit.SECONDS);
+    @Override
+    public String toString() {
+        return this.getName()+" this is a reminder event for every min";
     }
-}*/
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 }

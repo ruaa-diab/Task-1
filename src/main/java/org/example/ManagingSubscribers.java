@@ -32,7 +32,7 @@ public class ManagingSubscribers implements Subject<Subscriber>{
     public void publish(Event event  ) {
         //so we can publush all kinds using same method
         Notification notification = new Notification(
-                event.getType().toString(), event,
+                event.getMsg(), event,
                 "task alert");
         this.notifyAllSubscribers(notification,event.getType());
 

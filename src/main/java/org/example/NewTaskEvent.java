@@ -10,13 +10,11 @@ public class NewTaskEvent extends Event {
 
 
     public NewTaskEvent(EventType type, Task task) {
-        super(EventType.NEW_TASK);
+        super(EventType.NEW_TASK,task.getTitle());
         this.task = task;
     }
 
-    public NewTaskEvent(EventType type) {
-        super(type);
-    }
+
 
     public Task getTask() {
         return task;
