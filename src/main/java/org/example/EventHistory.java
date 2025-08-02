@@ -25,7 +25,9 @@ public class EventHistory {
         return instance;
     }
 
-
+    public Map<Event, LocalDateTime> getHistoryEvents() {
+        return HistoryEvents;
+    }
 
     public void recordEvent(Event event){
         HistoryEvents.put(event, LocalDateTime.now());
@@ -35,7 +37,7 @@ public class EventHistory {
     public List<Event> getEventsFromLastHour(){
         LocalDateTime anHourAgo=LocalDateTime.now().minus(1, ChronoUnit.HOURS);
         List<Event> result=new ArrayList<>();
-        for(Map.Entry<Event,LocalDateTime> oneEntry:HistoryEvents.entrySet()){
+        for(Map.Entry<Event,LocalDateTime> oneEntry:this.getHistoryEvents().entrySet()){
             if(oneEntry.getValue().isAfter(anHourAgo)){
                 result.add(oneEntry.getKey());
             }
@@ -48,7 +50,7 @@ public class EventHistory {
     public List<Event> getEventsFromLastHour(EventType type){
 
         List<Event> result=new ArrayList<>();
-        for(Map.Entry<Event,LocalDateTime> oneEntry:HistoryEvents.entrySet()){
+        for(Map.Entry<Event,LocalDateTime> oneEntry:this.getHistoryEvents().entrySet()){
             if(oneEntry.getKey().getType().equals(type)){
                 result.add(oneEntry.getKey());
             }

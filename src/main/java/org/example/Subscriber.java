@@ -61,19 +61,17 @@ public class Subscriber implements Observer{
         }
 
         for(EventFilter f:this.getFilters()){
-
             if(!f.matches(e,currentTime)){
+               // System.out.println("Filter " + f.getClass().getSimpleName() + " rejected event: " + e.getMsg());
                 return false;
-
             }
         }
         return true;
     }
-
     @Override
     public void update(Notification nf) {
         if(this.passTheFilters(nf.getRelatedTask())){
-            System.out.println(nf.toString());
+            System.out.println("[" + this.name + "] received: " + nf.toString());
             //or we can send an email
             //or show a pop up on the device
 

@@ -17,8 +17,11 @@ private boolean proiorityHigh;
         this.proiorityHigh = proiorityHigh;
     }
 
-    @Override
     public boolean matches(Event event, LocalTime currentTime) {
-        return event.isUrgent()==this.isProiorityHigh();
+        boolean result = event.isUrgent() == this.isProiorityHigh();
+        System.out.println("PriorityFilter Debug: event.isUrgent()=" + event.isUrgent() +
+                ", this.isProiorityHigh()=" + this.isProiorityHigh() +
+                ", result=" + result);
+        return result;
     }
 }

@@ -8,17 +8,9 @@ public class NewTaskEvent extends Event {
 
     private Task task;
 
-    @Override
-    public boolean isUrgent() {
-        return isUrgent;
-    }
 
-    @Override
-    public void setUrgent(boolean urgent) {
-        isUrgent = urgent;
-    }
 
-    private boolean isUrgent;
+
 
 
     public NewTaskEvent( Task task,boolean isUrgent) {

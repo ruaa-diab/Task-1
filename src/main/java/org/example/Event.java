@@ -49,11 +49,12 @@ public abstract class Event {
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         Event event = (Event) o;
-        return type == event.type;
+        return isUrgent == event.isUrgent && Objects.equals(msg, event.msg) && type == event.type;
     }
+            //we have to include them all other wise the key will be the same
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(type);
+        return Objects.hash(msg, type, isUrgent);
     }
 }

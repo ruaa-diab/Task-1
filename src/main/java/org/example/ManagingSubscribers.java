@@ -40,6 +40,7 @@ public class ManagingSubscribers implements Subject<Subscriber>{
                 event.getMsg(), event,
                 "task alert");
         this.notifyAllSubscribers(notification,event.getType());
+        EventHistory.getInstance().recordEvent(event);
 
 
     }
