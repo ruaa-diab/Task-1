@@ -6,7 +6,6 @@ public class Admin {
 
     private String adiminId;
     private String name;
-    static int c = 0;
 
     public Admin() {
     }

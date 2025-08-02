@@ -1,8 +1,9 @@
 package org.example;
 
 
+import java.util.Objects;
 
-public abstract class Event{
+public abstract class Event {
 
 //checkkkkkkkkkk
 
@@ -42,5 +43,17 @@ public abstract class Event{
 
     public boolean isUrgent() {
         return isUrgent;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Event event = (Event) o;
+        return type == event.type;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(type);
     }
 }
