@@ -78,9 +78,7 @@ public class Scheduler {
 
 
 
-       //1.is it true that the system makes them and fire them(to make sure)
-    //is it true if i make the system fires them at a default time
-    //note:no need for new method fix in publishhhhhhhhhhhhhhhhhhhhh
+
     //and the admin can update and change it
     // i will make sure that they dint have the same time
 

@@ -57,4 +57,13 @@ public abstract class Event {
     public int hashCode() {
         return Objects.hash(msg, type, isUrgent);
     }
+
+    @Override
+    public String toString() {
+        return "Event{" +
+                "isUrgent=" + isUrgent +
+                ", msg='" + msg + '\'' +
+                ", type=" + type +
+                '}';
+    }
 }

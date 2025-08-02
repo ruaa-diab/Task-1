@@ -70,7 +70,7 @@ public class Main {
 
         // Get events from last hour
         List<Event> recentEvents = EventHistory.getInstance().getEventsFromLastHour();
-        Map<Event, LocalDateTime> meme=EventHistory.getInstance().getHistoryEvents();
+        Map<Event, LocalDateTime> meme = EventHistory.getInstance().getHistoryEvents();
         System.out.println(meme.size());
 
         System.out.println("Total events from last hour: " + recentEvents.size());
@@ -86,7 +86,6 @@ public class Main {
         ManagingSubscribers.getInstance().reSubscribe(subscriber1, EventType.NEW_TASK);
 
 
-
         // Unsubscribe Bob
         System.out.println("\nUnsubscribing Bob from NEW_TASK events:");
         ManagingSubscribers.getInstance().Unsubscribe(subscriber2, EventType.NEW_TASK);
@@ -96,7 +95,9 @@ public class Main {
         Task task4 = new Task("New assignment");
         NewTaskEvent event4 = new NewTaskEvent(task4, false);
         ManagingSubscribers.getInstance().publish(event4);
-
+        for (Map.Entry<Event, List<Subscriber>> e : ManagingSubscribers.getInstance().getNotifiedOdOfEvent().entrySet()){
+        System.out.println(e.getKey().getMsg()+" "+e.getValue().size());
+    }
         System.out.println("\n=== Test Complete ===");
     }
 }

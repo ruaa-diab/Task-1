@@ -15,7 +15,7 @@ public class ManagingSubscribers implements Subject<Subscriber>{
     //here changing the normal counter to atomic so it can be thread safe
     //in case 2 objects were made at the same time.
 
-
+     private Map<Event ,List<Subscriber>> notifiedOdOfEvent =new HashMap<>();
 
     //PRIVATE constructor so no one makes another instance
     private ManagingSubscribers() {
@@ -31,10 +31,14 @@ public class ManagingSubscribers implements Subject<Subscriber>{
         //and by that we get subscribers
     }
 
+    public Map<Event, List<Subscriber>> getNotifiedOdOfEvent() {
+        return notifiedOdOfEvent;
+    }
 
     //we cant have the task to publish it self so we move it t here to manage publishing an d
     //subscribers
-    public void publish(Event event  ) {
+    public synchronized void publish(Event event  ) {
+        // so if more than event published at the same time one of them waits
         //so we can publush all kinds using same method
         Notification notification = new Notification(
                 event.getMsg(), event,
@@ -77,9 +81,16 @@ public class ManagingSubscribers implements Subject<Subscriber>{
     @Override
     public void notifyAllSubscribers(Notification nf,EventType type) {
         if(this.getSubscribers(type)!=null) {
+            List<Subscriber> notified=new ArrayList<>();
 
             for (Subscriber s : this.getSubscribers(type)) {
-                s.update(nf);
+               if( s.update(nf)) {
+                   notified.add(s);
+               }
+
+            }
+            if(!notified.isEmpty()){
+                this.getNotifiedOdOfEvent().put(nf.getRelatedTask(),notified);
             }
         }
 

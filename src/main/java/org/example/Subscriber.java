@@ -69,13 +69,16 @@ public class Subscriber implements Observer{
         return true;
     }
     @Override
-    public void update(Notification nf) {
+    public boolean update(Notification nf) {
         if(this.passTheFilters(nf.getRelatedTask())){
             System.out.println("[" + this.name + "] received: " + nf.toString());
+            // editing this to boolean so i can log the event eith notified subscribers
             //or we can send an email
             //or show a pop up on the device
+            return true;
 
         }
+        return false;
 //to conclude publish calls notify notify calls update and update calls pass and pass calles matches if there is
         //a match publich if not then no.
     }
