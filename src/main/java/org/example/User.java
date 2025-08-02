@@ -11,7 +11,12 @@ public class User {
     public User(){
 
     }
-    public User(List<EventType> preferences,String name){
+
+    public User(String name) {
+        this.name = name;
+    }
+
+    public User(List<EventType> preferences, String name){
         this.preferences=preferences;
         this.name=name;
     }

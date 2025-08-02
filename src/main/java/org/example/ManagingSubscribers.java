@@ -4,12 +4,17 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class ManagingSubscribers implements Subject<Subscriber>{
     // for tis class i chose the design singleton to use only one instance
     //so i can keep the list of subscribers from losing any data
     private static ManagingSubscribers instance = new ManagingSubscribers();
     private Map<EventType, List<Subscriber>> manage = new HashMap<>();
+    private static AtomicInteger  counter= new AtomicInteger(0);
+    //here changing the normal counter to atomic so it can be thread safe
+    //in case 2 objects were made at the same time.
+
 
 
     //PRIVATE constructor so no one makes another instance
@@ -40,14 +45,23 @@ public class ManagingSubscribers implements Subject<Subscriber>{
     }
 
     @Override
-    public void Subscribe(Subscriber o, EventType type) {
+    public void reSubscribe(Subscriber o, EventType type) {
         if(this.getSubscribers(type)==null){
             this.manage.put(type,new ArrayList<>());
+            this.getSubscribers(type).add(o);
 
 
 
+        }else{
+            if(this.getSubscribers(type).contains(o)){
+                System.out.println("you are already subscribed");
+                        //we can make a notification and send this massage as a nf
+            }else{
+                this.getSubscribers(type).add(o);
+                System.out.println("you have jut supscribed to a new type");
+            }
         }
-        this.getSubscribers(type).add(o);
+
     }
 //add here to make the subscribers subscribe but not the same thing
     //subscribe method for users
@@ -69,6 +83,25 @@ public class ManagingSubscribers implements Subject<Subscriber>{
         }
 
     }
+
+    //now the subscribe method for the user
+
+
+    public Subscriber Subscribe(User o, EventType type) {
+        //this methd should only be available to subscribers onlyyy.
+        if(this.getSubscribers(type)==null){
+            this.manage.put(type,new ArrayList<>());}
+
+
+        Subscriber newSubscriber=new Subscriber("sub"+counter.incrementAndGet(),o.getName());
+                //here i will put counter instead of using the ready method to save time;
+        this.getSubscribers(type).add(newSubscriber);
+        return newSubscriber;
+    }
+
+
+
+
 
 
 

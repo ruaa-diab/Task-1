@@ -7,7 +7,7 @@ import java.util.List;
 public class Subscriber implements Observer{
     private String name;
     private String id;
-    private List<EventFilter> filters =new ArrayList<>();
+    private List<EventFilter> filters;
 
 
 
@@ -17,13 +17,9 @@ public class Subscriber implements Observer{
     public Subscriber(String id,String name) {
         this.id = id;
         this.name=name;
+        this.filters=new ArrayList<>();
     }
 
-    public Subscriber(List<EventFilter> filters, String id, String name) {
-        this.filters = filters;
-        this.id = id;
-        this.name = name;
-    }
 
     public List<EventFilter> getFilters() {
         return filters;
@@ -52,12 +48,10 @@ public class Subscriber implements Observer{
 
 
     public void addFilter(EventFilter filter){
-        if(filter!=null){
-            this.getFilters().add(filter);
-        }else{
-            throw new NullPointerException();
-        }
+
+        this.getFilters().add(filter);
     }
+    //no need for exception handling because it cant be null /the size will be 0.
     // so supscriber can add filter any time he/she wants
 
     private boolean passTheFilters(Event e){

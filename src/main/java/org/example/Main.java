@@ -8,7 +8,7 @@ public class Main {
 
         Subscriber s=new Subscriber("ruaa","ruru");
         s.addFilter(new PriorityFilter(false));
-        ManagingSubscribers.getInstance().Subscribe(s,EventType.NEW_TASK);
+      //  ManagingSubscribers.getInstance().Subscribe(s,EventType.NEW_TASK);
       ManagingSubscribers.getInstance().publish(wow);
 
 
