@@ -3,6 +3,7 @@ package org.example;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Subscriber implements Observer{
     private String name;
@@ -108,5 +109,17 @@ public class Subscriber implements Observer{
                 ", name='" + name + '\'' +
                 ", id='" + id + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Subscriber that = (Subscriber) o;
+        return Objects.equals(name, that.name) && Objects.equals(id, that.id) && Objects.equals(filters, that.filters);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, id, filters);
     }
 }

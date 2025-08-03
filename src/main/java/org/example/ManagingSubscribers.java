@@ -120,7 +120,7 @@ public class ManagingSubscribers implements Subject<Subscriber>{
 
     //now the subscribe method for the user
 
-
+//check
     public synchronized Subscriber Subscribe(User o, EventType type) {
         //this methd should only be available to subscribers onlyyy.
         if (o == null) {
@@ -135,7 +135,18 @@ public class ManagingSubscribers implements Subject<Subscriber>{
         if(this.getSubscribers(type)==null){
             this.manage.put(type,new ArrayList<>());}
 
-
+        for (Map.Entry<EventType, List<Subscriber>> entry : this.manage.entrySet()) {
+            List<Subscriber> subscribers = entry.getValue();
+            if (subscribers != null && !subscribers.isEmpty()) {
+                for (Subscriber subscriber : subscribers) {
+                    if (subscriber.equals(o)) {
+                        System.out.println("You are already subscribed to " + entry.getKey() +
+                                ". Users can only subscribe once.");
+                        return null; // User already exists, cannot subscribe again
+                    }
+                }
+            }
+        }
         Subscriber newSubscriber=new Subscriber("sub"+counter.incrementAndGet(),o.getName());
                 //here i will put counter instead of using the ready method to save time;
         this.getSubscribers(type).add(newSubscriber);
