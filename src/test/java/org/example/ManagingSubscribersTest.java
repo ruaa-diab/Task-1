@@ -27,12 +27,15 @@ public class ManagingSubscribersTest {
         managingSubscribers = ManagingSubscribers.getInstance();
 
         // Create test users
-        testUser1 = new User("Alice","1234");
+        testUser1 = new User("Alice","1294");
         testUser2 = new User("Bob","14567");
 
         // Create test subscribers
         testSubscriber1 = new Subscriber("SUB001", "Alice");
+        testSubscriber1.setSubscriberId("22334455");
+
         testSubscriber2 = new Subscriber("SUB002", "Bob");
+        testSubscriber2.setSubscriberId("3r456");
 
         // Create test events
         testEvent = new NewTaskEvent(new Task("TSK001", "Test Task"), true);
@@ -62,9 +65,12 @@ public class ManagingSubscribersTest {
     // Test Subscribe method (User → Subscriber)
     @Test
     public void testSubscribeUser() {
-        Subscriber subscriber = managingSubscribers.Subscribe(testUser1, EventType.NEW_TASK);
+        // Create a unique user for this test instead of reusing testUser1
+        User uniqueUser = new User("Alice", "UNIQUE_ID_" + System.currentTimeMillis());
 
-        assertNotNull(subscriber);
+        Subscriber subscriber = managingSubscribers.Subscribe(uniqueUser, EventType.NEW_TASK);
+
+        assertNotNull(subscriber, "Subscriber should not be null - check if user was already subscribed");
         assertEquals("Alice", subscriber.getName());
         assertTrue(subscriber.getId().startsWith("sub"));
 
@@ -184,8 +190,15 @@ public class ManagingSubscribersTest {
     // Test notifyAllSubscribers method
     @Test
     public void testNotifyAllSubscribers() {
+        // Clear any existing notifications first
+        managingSubscribers.getNotifiedOdOfEvent().clear();
+
+        // Use unique user to avoid subscription conflicts
+        User uniqueUser = new User("NotifyTestUser", "NOTIFY_TEST_" + System.currentTimeMillis());
+
         // Subscribe a user
-        Subscriber subscriber = managingSubscribers.Subscribe(testUser1, EventType.NEW_TASK);
+        Subscriber subscriber = managingSubscribers.Subscribe(uniqueUser, EventType.NEW_TASK);
+        assertNotNull(subscriber, "Subscription should succeed before testing notifications");
 
         // Create notification
         Notification notification = new Notification(testEvent.getMsg(), testEvent, "Test Alert");
@@ -194,11 +207,12 @@ public class ManagingSubscribersTest {
         managingSubscribers.notifyAllSubscribers(notification, EventType.NEW_TASK);
 
         // Verify notification was recorded
-        assertTrue(managingSubscribers.getNotifiedOdOfEvent().containsKey(testEvent));
+        assertTrue(managingSubscribers.getNotifiedOdOfEvent().containsKey(testEvent),
+                "Event should be recorded in notification history");
         List<Subscriber> notified = managingSubscribers.getNotifiedOdOfEvent().get(testEvent);
-        assertTrue(notified.contains(subscriber));
+        assertNotNull(notified, "Notified subscribers list should not be null");
+        assertTrue(notified.contains(subscriber), "Subscriber should be in the notified list");
     }
-
     @Test
     public void testNotifyAllSubscribersNullNotification() {
         assertThrows(IllegalArgumentException.class, () -> {
@@ -217,8 +231,8 @@ public class ManagingSubscribersTest {
     // Test AtomicInteger counter for subscriber IDs
     @Test
     public void testSubscriberIdGeneration() {
-        Subscriber sub1 = managingSubscribers.Subscribe(testUser1, EventType.NEW_TASK);
-        Subscriber sub2 = managingSubscribers.Subscribe(testUser2, EventType.NEW_TASK);
+        Subscriber sub1 = managingSubscribers.Subscribe(new User("ruaa","2556677"), EventType.NEW_TASK);
+        Subscriber sub2 = managingSubscribers.Subscribe(new User("mh","22eerr"), EventType.NEW_TASK);
 
         assertNotEquals(sub1.getId(), sub2.getId());
         assertTrue(sub1.getId().startsWith("sub"));
@@ -239,7 +253,11 @@ public class ManagingSubscribersTest {
             executor.submit(() -> {
                 try {
                     for (int j = 0; j < subscriptionsPerThread; j++) {
-                        User user = new User("User" + threadId + "_" + j,"1233");
+                        // FIX: Give each user a unique ID
+                        User user = new User("User" + threadId + "_" + j, "ID_" + threadId + "_" + j);
+                        //                                                 
+                        //                                                 Now each user has unique ID!
+
                         Subscriber subscriber = managingSubscribers.Subscribe(user, EventType.NEW_TASK);
                         if (subscriber != null) {
                             successCount.incrementAndGet();
@@ -260,10 +278,8 @@ public class ManagingSubscribersTest {
         // Verify subscribers were added to the list
         List<Subscriber> subscribers = managingSubscribers.getSubscribers(EventType.NEW_TASK);
         assertNotNull(subscribers);
-        // Note: Size might be larger due to other tests, so we check minimum
         assertTrue(subscribers.size() >= numberOfThreads * subscriptionsPerThread);
     }
-
     // Test thread safety - concurrent publishing
     @Test
     public void testConcurrentPublishing() throws InterruptedException {
