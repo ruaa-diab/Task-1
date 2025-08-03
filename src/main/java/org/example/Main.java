@@ -7,7 +7,7 @@ import java.util.Map;
 
 public class Main {
     public static void main(String[] args) {
-        System.out.println("=== Event Management System Test ===\n");
+      /*  System.out.println("=== Event Management System Test ===\n");
 
         // Using singleton instances directly
 
@@ -97,7 +97,24 @@ public class Main {
         ManagingSubscribers.getInstance().publish(event4);
         for (Map.Entry<Event, List<Subscriber>> e : ManagingSubscribers.getInstance().getNotifiedOdOfEvent().entrySet()){
         System.out.println(e.getKey().getMsg()+" "+e.getValue().size());
-    }
+    }*/
         System.out.println("\n=== Test Complete ===");
+        User ur1=new User("alice","1234455");
+        Subscriber sub1 =ManagingSubscribers.getInstance().Subscribe(ur1,EventType.NEW_TASK);
+        //ManagingSubscribers.getInstance().Subscribe(ur1,EventType.NEW_TASK);
+       // ManagingSubscribers.getInstance().Subscribe(ur1,EventType.HEARTBEAT);
+       // ManagingSubscribers.getInstance().Subscribe(ur1,EventType.HEARTBEAT);
+        ManagingSubscribers.getInstance().reSubscribe(sub1,EventType.TASK_REMINDER);
+        ManagingSubscribers.getInstance().reSubscribe(sub1,EventType.TASK_REMINDER);
+
+
+
+
+        System.out.println( ManagingSubscribers.getInstance().getSubscribers(EventType.NEW_TASK).size());
+        System.out.println( ManagingSubscribers.getInstance().getSubscribers(EventType.TASK_REMINDER).size());
+
+        System.out.println(EventHistory.getInstance().getHistoryEvents().size());
     }
+
+
 }

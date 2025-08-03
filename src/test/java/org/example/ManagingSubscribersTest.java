@@ -27,8 +27,8 @@ public class ManagingSubscribersTest {
         managingSubscribers = ManagingSubscribers.getInstance();
 
         // Create test users
-        testUser1 = new User("Alice");
-        testUser2 = new User("Bob");
+        testUser1 = new User("Alice","1234");
+        testUser2 = new User("Bob","14567");
 
         // Create test subscribers
         testSubscriber1 = new Subscriber("SUB001", "Alice");
@@ -239,7 +239,7 @@ public class ManagingSubscribersTest {
             executor.submit(() -> {
                 try {
                     for (int j = 0; j < subscriptionsPerThread; j++) {
-                        User user = new User("User" + threadId + "_" + j);
+                        User user = new User("User" + threadId + "_" + j,"1233");
                         Subscriber subscriber = managingSubscribers.Subscribe(user, EventType.NEW_TASK);
                         if (subscriber != null) {
                             successCount.incrementAndGet();

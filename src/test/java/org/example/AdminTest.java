@@ -121,7 +121,7 @@ public class AdminTest {
     @Test
     public void testTaskPublishing() {
         // Create a subscriber to verify the task gets published
-        User testUser = new User("Test User");
+        User testUser = new User("Test User","1234577");
         Subscriber subscriber = managingSubscribers.Subscribe(testUser, EventType.NEW_TASK);
 
         // Create task - should trigger publishing

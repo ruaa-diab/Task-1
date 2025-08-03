@@ -8,7 +8,11 @@ import java.util.Objects;
 public class Subscriber implements Observer{
     private String name;
     private String id;
+    //given from the system
     private List<EventFilter> filters;
+
+
+    private String SubscriberId;
 
 
 
@@ -55,6 +59,18 @@ public class Subscriber implements Observer{
         this.name = name;
     }
 
+    public String getSubscriberId() {
+        return SubscriberId;
+    }
+
+    public void setSubscriberId(String subscriberId) {
+        if(subscriberId==null){
+            throw new IllegalArgumentException("subscriberids cannot be null");
+
+
+        }
+        SubscriberId = subscriberId;
+    }
 
 
     public void addFilter(EventFilter filter){
@@ -115,7 +131,7 @@ public class Subscriber implements Observer{
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         Subscriber that = (Subscriber) o;
-        return Objects.equals(name, that.name) && Objects.equals(id, that.id) && Objects.equals(filters, that.filters);
+        return this.getId().trim().compareToIgnoreCase(((Subscriber) o).getId().trim())==0;
     }
 
     @Override

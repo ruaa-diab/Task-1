@@ -63,6 +63,8 @@ public class ManagingSubscribers implements Subject<Subscriber>{
             this.manage.put(type, Collections.synchronizedList(new ArrayList<>()));
             //since it is one list it is easy to just synchronise it
             this.getSubscribers(type).add(o);
+            System.out.println("you have just supscribed to a new type");
+
 
 
 
@@ -72,7 +74,7 @@ public class ManagingSubscribers implements Subject<Subscriber>{
                         //we can make a notification and send this massage as a nf
             }else{
                 this.getSubscribers(type).add(o);
-                System.out.println("you have jut supscribed to a new type");
+                System.out.println("you have just supscribed to a new type");
             }
         }
 
@@ -139,17 +141,21 @@ public class ManagingSubscribers implements Subject<Subscriber>{
             List<Subscriber> subscribers = entry.getValue();
             if (subscribers != null && !subscribers.isEmpty()) {
                 for (Subscriber subscriber : subscribers) {
-                    if (subscriber.equals(o)) {
+                    if (subscriber.getSubscriberId().trim().compareToIgnoreCase(o.getUserId())==0) {
                         System.out.println("You are already subscribed to " + entry.getKey() +
-                                ". Users can only subscribe once.");
+                                ". Users can only subscribe once."
+                        +" it you want to resubscribe TO other type ->  enter resubscribe");
                         return null; // User already exists, cannot subscribe again
                     }
                 }
             }
         }
         Subscriber newSubscriber=new Subscriber("sub"+counter.incrementAndGet(),o.getName());
+        newSubscriber.setSubscriberId(o.getUserId());
+        //i added this so i can see if this user already subscribed
                 //here i will put counter instead of using the ready method to save time;
         this.getSubscribers(type).add(newSubscriber);
+        System.out.println(o.getName()+" HAS BEEN SUBSCRIBED TO TYPE "+type+" successfully");
         return newSubscriber;
     }
 
