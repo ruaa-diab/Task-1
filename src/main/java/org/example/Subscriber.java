@@ -13,6 +13,8 @@ public class Subscriber implements Observer{
 
 
     private String SubscriberId;
+    // it is outside the constructor for saftey reasons it just used as a back up
+    // it is not for use
 
 
 

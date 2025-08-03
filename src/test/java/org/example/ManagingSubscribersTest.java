@@ -274,6 +274,7 @@ public class ManagingSubscribersTest {
         int numberOfThreads = 5;
         int eventsPerThread = 3;
         CountDownLatch latch = new CountDownLatch(numberOfThreads);
+        //to make sure we are waiting for all of them to finish
         ExecutorService executor = Executors.newFixedThreadPool(numberOfThreads);
 
         for (int i = 0; i < numberOfThreads; i++) {
@@ -296,10 +297,12 @@ public class ManagingSubscribersTest {
         }
 
         assertTrue(latch.await(5, TimeUnit.SECONDS));
+        // we are waiting 5 seconds
         executor.shutdown();
 
         // Verify events were recorded
         assertTrue(EventHistory.getInstance().getHistoryEvents().size() >= numberOfThreads * eventsPerThread);
+        //checking if all of them did happen and were published correctly.
     }
 
 
