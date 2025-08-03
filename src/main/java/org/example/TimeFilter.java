@@ -1,4 +1,4 @@
-package org.example;
+/*package org.example;
 
 import java.time.LocalTime;
 
@@ -55,4 +55,4 @@ public class TimeFilter implements EventFilter {
         return currentTime.getHour() >= startHour &&
                 currentTime.getHour() <= endHour;
     }
-}
+}*/

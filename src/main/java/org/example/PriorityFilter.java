@@ -29,5 +29,10 @@ private boolean proiorityHigh;
                 ", this.isProiorityHigh()=" + this.isProiorityHigh() +
                 ", result=" + result);
         return result;
+
+    }
+    @Override
+    public String getDescription() {
+        return "PriorityFilter{priorityHigh=" + this.proiorityHigh + "}";
     }
 }

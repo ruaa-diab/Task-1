@@ -255,7 +255,7 @@ public class ManagingSubscribersTest {
                     for (int j = 0; j < subscriptionsPerThread; j++) {
                         // FIX: Give each user a unique ID
                         User user = new User("User" + threadId + "_" + j, "ID_" + threadId + "_" + j);
-                        //                                                 
+                        //
                         //                                                 Now each user has unique ID!
 
                         Subscriber subscriber = managingSubscribers.Subscribe(user, EventType.NEW_TASK);

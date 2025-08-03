@@ -5,28 +5,34 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class Subscriber implements Observer{
+public class Subscriber implements Observer {
     private String name;
     private String id;
-    //given from the system
     private List<EventFilter> filters;
-
-
     private String SubscriberId;
-    // it is outside the constructor for saftey reasons it just used as a back up
-    // it is not for use
-
-
 
     public Subscriber() {
     }
 
-    public Subscriber(String id,String name) {
-        this.setId( id);
+    public Subscriber(String id, String name) {
+        this.setId(id);
         this.setName(name);
-        this.filters=new ArrayList<>();
+        this.filters = new ArrayList<>();
     }
 
+    // ADD THESE METHODS FOR BACKWARD COMPATIBILITY:
+    public EventFilter getEventFilter() {
+        // Return the first filter if exists, null otherwise
+        return filters.isEmpty() ? null : filters.get(0);
+    }
+
+    public void setEventFilter(EventFilter filter) {
+        // Clear existing filters and add the new one
+        filters.clear();
+        if (filter != null) {
+            filters.add(filter);
+        }
+    }
 
     public List<EventFilter> getFilters() {
         return filters;
@@ -66,39 +72,42 @@ public class Subscriber implements Observer{
     }
 
     public void setSubscriberId(String subscriberId) {
-        if(subscriberId==null){
+        if (subscriberId == null) {
             throw new IllegalArgumentException("subscriberids cannot be null");
-
-
         }
         SubscriberId = subscriberId;
     }
 
-
-    public void addFilter(EventFilter filter){
-
+    public void addFilter(EventFilter filter) {
         this.getFilters().add(filter);
     }
-    //no need for exception handling because it cant be null /the size will be 0.
-    // so supscriber can add filter any time he/she wants
 
-    private boolean passTheFilters(Event e){
-        if (e == null) {
-            return false; // or throw exception, depending on your preference
+    // ADD THIS METHOD for factory pattern compatibility:
+    public void addFilters(EventFilter... filters) {
+        for (EventFilter filter : filters) {
+            if (filter != null) {
+                this.filters.add(filter);
+            }
         }
-        LocalTime currentTime=LocalTime.now();
-        if(this.getFilters().isEmpty()){
+    }
+
+    private boolean passTheFilters(Event e) {
+        if (e == null) {
+            return false;
+        }
+        LocalTime currentTime = LocalTime.now();
+        if (this.getFilters().isEmpty()) {
             return true;
         }
 
-        for(EventFilter f:this.getFilters()){
-            if(!f.matches(e,currentTime)){
-               // System.out.println("Filter " + f.getClass().getSimpleName() + " rejected event: " + e.getMsg());
+        for (EventFilter f : this.getFilters()) {
+            if (!f.matches(e, currentTime)) {
                 return false;
             }
         }
         return true;
     }
+
     @Override
     public boolean update(Notification nf) {
         if (nf == null) {
@@ -106,19 +115,12 @@ public class Subscriber implements Observer{
             return false;
         }
 
-        if(this.passTheFilters(nf.getRelatedTask())){
+        if (this.passTheFilters((Event) nf.getRelatedTask())) {
             System.out.println("[" + this.name + "] received: " + nf.toString());
-            // editing this to boolean so i can log the event eith notified subscribers
-            //or we can send an email
-            //or show a pop up on the device
             return true;
-
         }
         return false;
-//to conclude publish calls notify notify calls update and update calls pass and pass calles matches if there is
-        //a match publich if not then no.
     }
-
 
     @Override
     public String toString() {
@@ -133,7 +135,7 @@ public class Subscriber implements Observer{
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         Subscriber that = (Subscriber) o;
-        return this.getId().trim().compareToIgnoreCase(((Subscriber) o).getId().trim())==0;
+        return this.getId().trim().compareToIgnoreCase(((Subscriber) o).getId().trim()) == 0;
     }
 
     @Override
