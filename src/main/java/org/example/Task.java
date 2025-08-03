@@ -7,8 +7,8 @@ public class Task {
     private String title;
 
     public Task(String taskId, String title) {
-        this.taskId = taskId;
-        this.title = title;
+        this.setTaskId(taskId);
+        this.setTitle( title);
     }
 
 
@@ -24,14 +24,21 @@ public class Task {
     }
 
     public void setTaskId(String taskId) {
+        if (taskId == null || taskId.trim().isEmpty()) {
+            throw new IllegalArgumentException("Task ID cannot be null or empty");
+        }
         this.taskId = taskId;
     }
 
     public String getTitle() {
+
         return title;
     }
 
     public void setTitle(String title) {
+        if (title == null || title.trim().isEmpty()) {
+            throw new IllegalArgumentException("Task title cannot be null or empty");
+        }
         this.title = title;
     }
 }

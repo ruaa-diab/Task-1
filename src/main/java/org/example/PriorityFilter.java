@@ -18,6 +18,12 @@ private boolean proiorityHigh;
     }
 
     public boolean matches(Event event, LocalTime currentTime) {
+        if (event == null) {
+            throw new IllegalArgumentException("Event cannot be null");
+        }
+        if (currentTime == null) {
+            throw new IllegalArgumentException("Current time cannot be null");
+        }
         boolean result = event.isUrgent() == this.isProiorityHigh();
         System.out.println("PriorityFilter Debug: event.isUrgent()=" + event.isUrgent() +
                 ", this.isProiorityHigh()=" + this.isProiorityHigh() +

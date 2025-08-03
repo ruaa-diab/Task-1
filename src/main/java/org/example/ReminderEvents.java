@@ -5,6 +5,7 @@ public class ReminderEvents extends Event {
 
 
     public ReminderEvents(String name,boolean isUrgent) {
+
         super(EventType.TASK_REMINDER, name, isUrgent);
 
 
@@ -12,6 +13,7 @@ public class ReminderEvents extends Event {
 
     @Override
     public String toString() {
-        return this.getMsg() + "ReminderEvents{}";
+        String msg = this.getMsg();
+        return (msg != null ? msg : "null") + "ReminderEvents{}";
     }
 }

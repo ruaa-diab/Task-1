@@ -30,17 +30,21 @@ public abstract class Event {
     }
 
     public void setType(EventType type) {
+        if (type == null) {
+            throw new IllegalArgumentException("EventType cannot be null");
+        }
         this.type = type;
     }
-
     public String getMsg() {
         return msg;
     }
 
     public void setMsg(String msg) {
+        if (msg == null) {
+            throw new IllegalArgumentException("Message cannot be null");
+        }
         this.msg = msg;
     }
-
     public boolean isUrgent() {
         return isUrgent;
     }

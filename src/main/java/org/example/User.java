@@ -13,12 +13,12 @@ public class User {
     }
 
     public User(String name) {
-        this.name = name;
+        this.setName(name);
     }
 
     public User(List<EventType> preferences, String name){
-        this.preferences=preferences;
-        this.name=name;
+        this.setPreferences(preferences);
+        this.setName(name);
     }
 
     public List<EventType> getPreferences() {
@@ -26,6 +26,9 @@ public class User {
     }
 
     public void setPreferences(List<EventType> preferences) {
+        if (preferences == null) {
+            throw new IllegalArgumentException("Preferences list cannot be null");
+        }
         this.preferences = preferences;
     }
 
@@ -34,6 +37,10 @@ public class User {
     }
 
     public void setName(String name) {
+
+        if (name == null || name.trim().isEmpty()) {
+            throw new IllegalArgumentException("Name cannot be null or empty");
+        }
         this.name = name;
     }
 }

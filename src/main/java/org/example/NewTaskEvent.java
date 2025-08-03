@@ -15,7 +15,7 @@ public class NewTaskEvent extends Event {
 
     public NewTaskEvent( Task task,boolean isUrgent) {
         super(EventType.NEW_TASK,task.getTitle(),isUrgent);
-        this.task = task;
+        this.setTask(task);
     }
 
 
@@ -25,6 +25,9 @@ public class NewTaskEvent extends Event {
     }
 
     public void setTask(Task task) {
+        if (task == null) {
+            throw new IllegalArgumentException("Task cannot be null");
+        }
         this.task = task;
     }
 

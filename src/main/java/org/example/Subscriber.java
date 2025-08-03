@@ -15,8 +15,8 @@ public class Subscriber implements Observer{
     }
 
     public Subscriber(String id,String name) {
-        this.id = id;
-        this.name=name;
+        this.setId( id);
+        this.setName(name);
         this.filters=new ArrayList<>();
     }
 
@@ -26,10 +26,16 @@ public class Subscriber implements Observer{
     }
 
     public void setFilters(List<EventFilter> filters) {
+        if (filters == null) {
+            throw new IllegalArgumentException("Filters list cannot be null");
+        }
         this.filters = filters;
     }
 
     public String getId() {
+        if (id == null) {
+            throw new IllegalArgumentException("ID cannot be null");
+        }
         return id;
     }
 
@@ -38,6 +44,9 @@ public class Subscriber implements Observer{
     }
 
     public String getName() {
+        if (name == null) {
+            throw new IllegalArgumentException("Name cannot be null");
+        }
         return name;
     }
 
@@ -55,6 +64,9 @@ public class Subscriber implements Observer{
     // so supscriber can add filter any time he/she wants
 
     private boolean passTheFilters(Event e){
+        if (e == null) {
+            return false; // or throw exception, depending on your preference
+        }
         LocalTime currentTime=LocalTime.now();
         if(this.getFilters().isEmpty()){
             return true;
@@ -70,6 +82,11 @@ public class Subscriber implements Observer{
     }
     @Override
     public boolean update(Notification nf) {
+        if (nf == null) {
+            System.err.println("Subscriber [" + this.name + "] received null notification");
+            return false;
+        }
+
         if(this.passTheFilters(nf.getRelatedTask())){
             System.out.println("[" + this.name + "] received: " + nf.toString());
             // editing this to boolean so i can log the event eith notified subscribers

@@ -35,7 +35,9 @@ public class Admin {
 
 
     public void  creatTask(String title,boolean isUrgent) { //THIS METHOD IS ONLY FOR NEW TASKS
-
+        if (title == null || title.trim().isEmpty()) {
+            throw new IllegalArgumentException("Task title cannot be null or empty");
+        }
         Task task = new Task("TSK" + counter.incrementAndGet(), title);
         NewTaskEvent NTE = new NewTaskEvent( task,isUrgent); //BECASUE THIS IS A NEW TASK AND IT IS TYPE NEWTASK
 

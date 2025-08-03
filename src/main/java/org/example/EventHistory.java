@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class EventHistory {
     
@@ -17,8 +18,7 @@ public class EventHistory {
 
     private static EventHistory instance=new EventHistory();
 
-    private Map<Event, LocalDateTime> HistoryEvents=new HashMap<>();
-
+    private Map<Event, LocalDateTime> HistoryEvents = new ConcurrentHashMap<>();
     private  EventHistory(){}
     
     public static EventHistory getInstance(){
@@ -30,6 +30,9 @@ public class EventHistory {
     }
 
     public void recordEvent(Event event){
+        if (event == null) {
+            throw new IllegalArgumentException("Event cannot be null");
+        }
         HistoryEvents.put(event, LocalDateTime.now());
     }
 
@@ -49,6 +52,9 @@ public class EventHistory {
 
     public List<Event> getEventsFromLastHour(EventType type){
 
+        if (type == null) {
+            throw new IllegalArgumentException("EventType cannot be null");
+        }
         List<Event> result=new ArrayList<>();
         for(Map.Entry<Event,LocalDateTime> oneEntry:this.getHistoryEvents().entrySet()){
             if(oneEntry.getKey().getType().equals(type)){

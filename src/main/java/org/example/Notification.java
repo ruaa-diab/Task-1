@@ -1,6 +1,6 @@
 package org.example;
 
-import java.sql.Time;
+
 import java.time.LocalDateTime;
 
 public class Notification {
@@ -13,9 +13,9 @@ public class Notification {
     }
 
     public Notification(String message, Event relatedTask, String title) {
-        this.message = message;
-        this.relatedTask = relatedTask;
-        this.title = title;
+        this.setMessage(message);
+        this.setRelatedTask(relatedTask);
+        this.setTitle( title);
     }
 
     public String getMessage() {
@@ -23,6 +23,9 @@ public class Notification {
     }
 
     public void setMessage(String message) {
+        if (message == null) {
+            throw new IllegalArgumentException("Message cannot be null");
+        }
         this.message = message;
     }
 
@@ -31,6 +34,9 @@ public class Notification {
     }
 
     public void setRelatedTask(Event relatedTask) {
+        if (relatedTask == null) {
+            throw new IllegalArgumentException("Related task cannot be null");
+        }
         this.relatedTask = relatedTask;
     }
 
@@ -39,6 +45,9 @@ public class Notification {
     }
 
     public void setTitle(String title) {
+        if (title == null) {
+            throw new IllegalArgumentException("Title cannot be null");
+        }
         this.title = title;
     }
 
@@ -47,7 +56,7 @@ public class Notification {
         return "Notification{" +
                 "message='" + message + '\'' +
                 ", title='" + title + '\'' +
-                ", Task=" + this.getRelatedTask().getMsg() +
+                ", Task=" + (relatedTask != null ? relatedTask.getMsg() : "null") +
                 '}';
     }
 }
